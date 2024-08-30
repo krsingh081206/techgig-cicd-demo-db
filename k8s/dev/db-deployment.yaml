@@ -1,0 +1,24 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demodb
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: demodb
+  template:
+    metadata:
+      labels:
+        app: demodb
+    spec:
+      initContainers:
+      - name: liquibase-pipeline
+        image: IMAGE
+        args: ["update", "-Dliquibase.propertyFile=liquibase-dev.properties"]
+      containers:
+      - name: liquibase-busy 
+        image: busybox:1.28
+        command: ['sh', '-c', 'echo Liquibase is running! && sleep 3600']   
+---
