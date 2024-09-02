@@ -15,6 +15,7 @@ spec:
       initContainers:
       - name: liquibase-pipeline
         image: IMAGE
+        imagePullPolicy: Always
         args: ["update", "-Dliquibase.propertyFile=liquibase-stg.properties"]
       containers:
       - name: liquibase-busy 
